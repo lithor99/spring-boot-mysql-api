@@ -1,6 +1,7 @@
 package com.ishop.li.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.ishop.li.model.User;
@@ -14,6 +15,7 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    // private PasswordEncoder passwordEncoder;
 
     @GetMapping
     public List<User> getUsers() {
@@ -27,6 +29,7 @@ public class UserController {
 
     @PostMapping()
     public User createUser(@RequestBody User user) {
+        // String encodedPassword = passwordEncoder.encode(user.getPassword());
         return userRepository.save(user);
     }
 
