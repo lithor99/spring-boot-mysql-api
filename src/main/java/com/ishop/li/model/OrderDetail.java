@@ -1,11 +1,20 @@
 package com.ishop.li.model;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,16 +25,29 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int quantity;
-    private double price;
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "orderId")
-    private Order order;
+    @Column(name = "price", nullable = false)
+    private BigDecimal price;
 
-    @ManyToOne
-    @JoinColumn(name = "productId")
-    private Product product;
+    @Column(name = "order_id", nullable = false)
+    private Long orderId;
+
+    @Column(name = "product_id", nullable = false)
+    private Long productId;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @CreatedDate
+    private String createdAt = LocalDateTime.now(ZoneId.of("Asia/Vientiane"))
+            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    @LastModifiedDate
+    private String updatedAt = LocalDateTime.now(ZoneId.of("Asia/Vientiane"))
+            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
     /**
      * Geter methods
@@ -35,20 +57,28 @@ public class OrderDetail {
         return id;
     }
 
-    public double getPrice() {
-        return this.price;
-    }
-
-    public int getQuantity() {
+    public Integer getQuantity() {
         return this.quantity;
     }
 
-    public Order getOrder() {
-        return this.order;
+    public BigDecimal getPrice() {
+        return this.price;
     }
 
-    public Product getProduct() {
-        return this.product;
+    public Long getOrderId() {
+        return this.orderId;
+    }
+
+    public Long getProductId() {
+        return this.productId;
+    }
+
+    public String getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return this.updatedAt;
     }
 
     /**
@@ -59,19 +89,27 @@ public class OrderDetail {
         this.id = id;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

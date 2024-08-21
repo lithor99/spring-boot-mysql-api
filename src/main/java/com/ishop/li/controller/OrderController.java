@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import com.ishop.li.model.Order;
 import com.ishop.li.repository.OrderRepository;
 
+import io.micrometer.common.lang.NonNull;
+
 import java.util.List;
 
 @RestController
@@ -20,16 +22,19 @@ public class OrderController {
         return orderRepository.findAll();
     }
 
+    @SuppressWarnings("null")
     @GetMapping("/{id}")
-    public Order getOrder(@PathVariable Long id) {
+    public Order getOrder(@PathVariable @NonNull Long id) {
         return orderRepository.findById(id).orElse(null);
     }
 
+    @SuppressWarnings("null")
     @PostMapping()
     public Order createUser(@RequestBody Order order) {
         return orderRepository.save(order);
     }
 
+    @SuppressWarnings("null")
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         orderRepository.deleteById(id);

@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import com.ishop.li.model.Category;
 import com.ishop.li.repository.CategoryRepository;
 
-import io.micrometer.common.lang.NonNull;
-
 import java.util.List;
 
 @RestController
@@ -22,16 +20,19 @@ public class CategoryController {
         return categoryRepository.findAll();
     }
 
+    @SuppressWarnings("null")
     @GetMapping("/{id}")
     public Category getUser(@PathVariable Long id) {
         return categoryRepository.findById(id).orElse(null);
     }
 
+    @SuppressWarnings("null")
     @PostMapping()
     public Category createUser(@RequestBody Category category) {
         return categoryRepository.save(category);
     }
 
+    @SuppressWarnings("null")
     @PutMapping("/{id}")
     public Category updateUser(@PathVariable Long id, @RequestBody Category category) {
         Category _category = categoryRepository.findById(id).orElse(null);
@@ -43,6 +44,7 @@ public class CategoryController {
         }
     }
 
+    @SuppressWarnings("null")
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         categoryRepository.deleteById(id);

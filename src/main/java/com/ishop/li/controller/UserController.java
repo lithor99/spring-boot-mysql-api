@@ -1,9 +1,8 @@
 package com.ishop.li.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 import com.ishop.li.model.User;
 import com.ishop.li.repository.UserRepository;
 
@@ -12,6 +11,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
+
+    private final PasswordEncoder passwordEncoder = null;
 
     @Autowired
     private UserRepository userRepository;
@@ -22,17 +23,20 @@ public class UserController {
         return userRepository.findAll();
     }
 
+    @SuppressWarnings("null")
     @GetMapping("/{id}")
     public User getUser(@PathVariable Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
+    @SuppressWarnings("null")
     @PostMapping()
     public User createUser(@RequestBody User user) {
-        // String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
+    @SuppressWarnings("null")
     @PutMapping("/{id}")
     public User updateUser(@PathVariable Long id, @RequestBody User user) {
         User _user = userRepository.findById(id).orElse(null);
@@ -45,6 +49,7 @@ public class UserController {
         }
     }
 
+    @SuppressWarnings("null")
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userRepository.deleteById(id);
